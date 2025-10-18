@@ -1,14 +1,15 @@
 import compression from 'compression';
 import cors from 'cors';
-import express, { Application, json, urlencoded } from 'express';
+import express, { Application, Request, Response, json, urlencoded } from 'express';
 import helmet from 'helmet';
-import { ExpressRoute } from './shared/type/express.types';
+import { DatabaseConnection } from './infrastructure/database/connection';
 
 export class App {
   public app: Application;
-
+  private databaseConnection: DatabaseConnection;
   constructor() {
     this.app = express();
+    this.databaseConnection = DatabaseConnection.getInstance();
     this.setupMiddleware();
     this.setupRoutes();
   }
@@ -22,9 +23,24 @@ export class App {
   }
 
   private setupRoutes(): void {
-    this.app.get('/health', ({req, res}: ExpressRoute) => {
+    // Health check endpoint
+    this.app.get('/health', (_req: Request, res: Response) => {
       res.json({ status: 'OK', timestamp: new Date().toISOString() });
     });
+  }
+
+  public async initialize(): Promise<void>{
+    try {
+      await this.databaseConnection.connect();
+      console.log('🚀 Application initialized successfully');
+    } catch (error) {
+      console.error('❌ Application initialization failed:', error);
+      throw error;
+    }
+  }
+
+  public async close(): Promise<void> {
+    await this.databaseConnection.disconnect();
   }
 
   public listen(port: number, callback?: () => void): void {
