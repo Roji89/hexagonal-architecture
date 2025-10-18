@@ -1,6 +1,10 @@
-export const config = {
+import { config } from 'dotenv';
+config();
+
+
+export const appConfig = {
   server: {
-    port: process.env.PORT || 5000,
+    port: parseInt(process.env.PORT || '5000'),
     host: process.env.HOST || 'localhost',
     env: process.env.NODE_ENV || 'development',
   },
