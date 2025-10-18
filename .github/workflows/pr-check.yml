@@ -1,0 +1,63 @@
+name: PR Quality Check
+
+on:
+  pull_request:
+    branches: [ master, develop ]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-check:
+    name: 🔍 PR Quality Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🔍 Lint only changed files
+        run: |
+          CHANGED_FILES=$(git diff --name-only --diff-filter=ACM origin/${{ github.base_ref }}..HEAD | grep -E '\.(ts|js)$' | tr '\n' ' ')
+          if [ ! -z "$CHANGED_FILES" ]; then
+            npx eslint $CHANGED_FILES
+          fi
+
+      - name: 🎨 Check formatting of changed files
+        run: |
+          CHANGED_FILES=$(git diff --name-only --diff-filter=ACM origin/${{ github.base_ref }}..HEAD | grep -E '\.(ts|js|json|md)$' | tr '\n' ' ')
+          if [ ! -z "$CHANGED_FILES" ]; then
+            npx prettier --check $CHANGED_FILES
+          fi
+
+      - name: 📊 Check test coverage
+        run: npm run test:coverage
+
+      - name: 💬 Comment PR with coverage
+        uses: romeovs/lcov-reporter-action@v0.3.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: ./coverage/lcov.info
+
+      - name: 📏 Check bundle size
+        run: |
+          npm run build
+          BUNDLE_SIZE=$(du -sh dist/ | cut -f1)
+          echo "Bundle size: $BUNDLE_SIZE"
+          echo "BUNDLE_SIZE=$BUNDLE_SIZE" >> $GITHUB_ENV
+
+      - name: 📊 Analyze dependencies
+        run: |
+          echo "## 📊 Dependency Analysis" >> $GITHUB_STEP_SUMMARY
+          echo "| Package | Version | Size |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------|---------|------|" >> $GITHUB_STEP_SUMMARY
+          npm list --depth=0 --json | jq -r '.dependencies | to_entries[] | "| \(.key) | \(.value.version) | - |"' >> $GITHUB_STEP_SUMMARY

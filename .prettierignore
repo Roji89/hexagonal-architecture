@@ -1,0 +1,34 @@
+# Build outputs
+dist/
+build/
+coverage/
+*.tsbuildinfo
+
+# Dependencies
+node_modules/
+
+# Generated files
+docs/api/
+*.log
+
+# Package files
+package-lock.json
+yarn.lock
+
+# Docker
+Dockerfile*
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Markdown in node_modules
+node_modules/**/*.md

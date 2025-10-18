@@ -127,10 +127,6 @@ temp/
 # PM2 runtime files
 ecosystem.config.js
 
-# Docker
-Dockerfile.dev
-docker-compose.override.yml
-
 # Testing
 test-results/
 playwright-report/

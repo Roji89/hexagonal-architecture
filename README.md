@@ -7,10 +7,7 @@ A modern, scalable backend implementation following **Hexagonal Architecture** (
 - [What is Hexagonal Architecture?](#what-is-hexagonal-architecture)
 - [Architecture Overview](#architecture-overview)
 - [Project Structure](#project-structure)
-- [Core Principles](#core-principles)
 - [Getting Started](#getting-started)
-- [Features](#features)
-- [Technologies](#technologies)
 
 ## 🎯 What is Hexagonal Architecture?
 
