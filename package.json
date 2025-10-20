@@ -71,7 +71,7 @@
     "class-validator": "^0.14.0",
     "compression": "^1.7.4",
     "concat-map": "^0.0.2",
-    "config": "^3.3.9",
+    "config": "^4.1.1",
     "cors": "^2.8.5",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
