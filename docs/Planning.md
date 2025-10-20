@@ -1,19 +1,27 @@
 Backend Development Plan - Hexagonal Architecture
-Phase 1: Foundation (Steps 1-3)
+
+# Phase 1: Foundation (Steps 1-3)
+
 ✅ Setup Project Infrastructure - Configure TypeScript, environment, linting
 ✅ Database Setup & Configuration - PostgreSQL + TypeORM setup
-Define Domain Entities - User, Product, Order entities with business rules
-Phase 2: Core Architecture (Steps 4-7)
-Create Repository Ports - Define repository interfaces
+✅Define Domain Entities - User, Product, Order entities with business rules
+
+# Phase 2: Core Architecture (Steps 4-7)
+
+✅Create Repository Ports - Define repository interfaces
 Implement Database Adapters - TypeORM repository implementations
 Build Application Use Cases - Business logic and DTOs
 Setup Dependency Injection - Inversify container configuration
-Phase 3: API Layer (Steps 8-11)
+
+# Phase 3: API Layer (Steps 8-11)
+
 Create HTTP Controllers - Express controllers and routes
 Implement Authentication & Security - JWT, bcrypt, authorization
 Setup External Services - Email, payment, file storage
 Add Error Handling & Logging - Global error handling, Winston
-Phase 4: Quality & Documentation (Steps 12-14)
+
+# Phase 4: Quality & Documentation (Steps 12-14)
+
 Write Tests - Unit, integration, and e2e tests
 API Documentation - OpenAPI/Swagger documentation
 Performance & Monitoring - Caching, rate limiting, metrics
@@ -51,4 +59,3 @@ Configuring TypeScript properly
 Setting up environment variables
 Configuring ESLint and Prettier
 Creating the basic server structure
-
