@@ -117,7 +117,7 @@ jobs:
           JWT_SECRET: test-jwt-secret-for-ci
 
       - name: 📈 Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./coverage/lcov.info
